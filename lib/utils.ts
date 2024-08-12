@@ -38,7 +38,7 @@ export function formatLearnerName(name: string): string {
 
 // A function that removes the utf8 BOM and returns a string. It can be called both with a Buffer and a string
 function removeBom(s: string): string;
-function removeBom(s: NodeBuffer): string;
+function removeBom(s: Buffer): string;
 function removeBom(s: any): string {
     if (s === null) {
         return null;
