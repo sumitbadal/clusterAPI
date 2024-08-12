@@ -12,7 +12,6 @@
 
 **Running curriculum scheduling**
 
-test users
 1. Import the module
     
        `import * as hypermoc from "hypermoc"`
