@@ -5,8 +5,7 @@ import jwt from "jsonwebtoken";
 
 // Create an interface for the User document that extends Mongoose's Document interface
 export interface IUser extends Document {
-  firstName: string;
-  lastName?: string;
+  fullName: string;
   emailId: string;
   password: string;
   phone?: number;
@@ -20,14 +19,11 @@ export interface IUser extends Document {
 // Define the User schema
 const userSchema = new mongoose.Schema<IUser>(
   {
-    firstName: {
+    fullName: {
       type: String,
       required: true,
       minLength: 4,
       maxLength: 50,
-    },
-    lastName: {
-      type: String,
     },
     emailId: {
       type: String,

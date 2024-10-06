@@ -19,14 +19,12 @@ app.post("/signup", async (req: Request, res: Response) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     console.log(hashedPassword);
 
-    const { emailId, firstName, lastName, gender, phone } = req.body;
+    const { emailId, fullName, phone } = req.body;
 
     const user = new User({
       emailId,
       password: hashedPassword,
-      firstName,
-      lastName,
-      gender,
+      fullName,
       phone,
     });
 
