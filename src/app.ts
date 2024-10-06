@@ -4,12 +4,14 @@ import User, { IUser } from "./models/user";
 import bcrypt from "bcrypt";
 import cookieParser from "cookie-parser";
 import userAuth from "./middlewares/auth";
+import cors from "cors";
 
 const app = express();
 
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 // Signup route
 app.post("/signup", async (req: Request, res: Response) => {
@@ -17,7 +19,7 @@ app.post("/signup", async (req: Request, res: Response) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     console.log(hashedPassword);
 
-    const { emailId, firstName, lastName, gender, skills } = req.body;
+    const { emailId, firstName, lastName, gender, phone } = req.body;
 
     const user = new User({
       emailId,
@@ -25,7 +27,7 @@ app.post("/signup", async (req: Request, res: Response) => {
       firstName,
       lastName,
       gender,
-      skills,
+      phone,
     });
 
     await user.save();

@@ -9,7 +9,7 @@ export interface IUser extends Document {
   lastName?: string;
   emailId: string;
   password: string;
-  age?: number;
+  phone?: number;
   gender?: string;
   about?: string;
   skills?: string[];
@@ -48,9 +48,12 @@ const userSchema = new mongoose.Schema<IUser>(
           throw new Error(`Enter a Strong Password`);
       },
     },
-    age: {
-      type: Number,
-      min: 18,
+    phone: {
+      type: String,
+      validate(value: string) {
+        if (!validator.isMobilePhone(value, "any"))
+          throw new Error(`Enter a valid mobile no`);
+      },
     },
     gender: {
       type: String,
