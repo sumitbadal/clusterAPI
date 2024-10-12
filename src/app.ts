@@ -1,10 +1,10 @@
 import express, { Request, Response } from "express";
 import connectDB from "./config/database";
 import User, { IUser } from "./models/user";
-import bcrypt from "bcrypt";
 import cookieParser from "cookie-parser";
-import userAuth from "./middlewares/auth";
 import cors from "cors";
+import authRouter from "./routes/auth";
+import profileRouter from "./routes/profile";
 
 const app = express();
 
@@ -13,60 +13,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 
-// Signup route
-app.post("/signup", async (req: Request, res: Response) => {
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    console.log(hashedPassword);
-
-    const { emailId, fullName, phone } = req.body;
-
-    const user = new User({
-      emailId,
-      password: hashedPassword,
-      fullName,
-      phone,
-    });
-
-    await user.save();
-    res.send("User created successfully");
-  } catch (error: any) {
-    console.log("Error:", error.message);
-    res.status(400).send(error.message);
-  }
-});
-
-// Login route
-app.post("/login", async (req: Request, res: Response) => {
-  try {
-    const { emailId, password } = req.body;
-
-    const user = await User.findOne({ emailId });
-    if (!user) throw new Error("Invalid Credentials");
-
-    const isValidPassword = await user.validatePassword(password);
-    if (isValidPassword) {
-      const token = await user.getToken();
-      res.cookie("token", token);
-      res.send("Login Successful");
-    } else {
-      throw new Error("Invalid Credentials");
-    }
-  } catch (error: any) {
-    res.status(400).send(`Error: ${error.message}`);
-  }
-});
-
-// Profile route
-app.get("/profile", userAuth, async (req, res) => {
-  try {
-    // const user = req.user;
-    console.log(`Logged in user:`);
-    res.send(`Reading Cookies,`);
-  } catch (error: any) {
-    res.status(400).send(`Error: ${error.message}`);
-  }
-});
+app.use("/auth", authRouter);
+app.use("/profile", profileRouter);
 
 // User update route
 app.patch("/userUpdate/:userId", async (req: Request, res: Response) => {
