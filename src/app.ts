@@ -54,7 +54,7 @@ app.patch("/userUpdate/:userId", async (req: Request, res: Response) => {
 
 // Test route
 app.get("/test", (req: Request, res: Response) => {
-  res.send("Hi, this is a test auto deployment");
+  res.send("Hi, this is a test auto deployment...");
 });
 
 // Connect to the database and start the server
