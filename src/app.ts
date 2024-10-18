@@ -11,7 +11,9 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+  origin:'http://localhost:3000'
+}));
 
 app.use("/auth", authRouter);
 app.use("/profile", profileRouter);
