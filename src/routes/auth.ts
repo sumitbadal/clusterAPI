@@ -55,6 +55,7 @@ authRouter.post("/login", async (req: Request, res: Response) => {
     }
   } catch (error: any) {
     res.status(400).send({
+      details: user,
       status: "Error",
       statusCode: 400,
       message: error.message,
