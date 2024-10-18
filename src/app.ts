@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin:'https://jalsuvidha.com',
+  origin:'https://manish774.github.io/splitIt/',
   credentials: true
 }));
 
