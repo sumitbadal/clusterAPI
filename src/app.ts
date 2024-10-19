@@ -12,11 +12,12 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-
-app.use(cors({
-  origin: "*",
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://manish774.github.io"],
+    credentials: true,
+  })
+);
 
 app.use("/auth", authRouter);
 app.use("/profile", profileRouter);
@@ -24,7 +25,7 @@ app.use("/profile", profileRouter);
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  
+
   next();
 });
 // User update route
