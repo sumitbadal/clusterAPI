@@ -11,10 +11,23 @@ export interface IUser extends Document {
   phone?: number;
   gender?: string;
   about?: string;
-  skills?: string[];
+  friends?: string[];
   getToken(): Promise<string>;
   validatePassword(passwordInputByUser: string): Promise<boolean>;
 }
+
+const friendSchema = new mongoose.Schema({
+  friendId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: "User", // Assuming 'User' is the model for users
+  },
+  status: {
+    type: String,
+    enum: ["accepted", "pending"],
+    required: true,
+  },
+});
 
 // Define the User schema
 const userSchema = new mongoose.Schema<IUser>(
@@ -63,9 +76,7 @@ const userSchema = new mongoose.Schema<IUser>(
       type: String,
       default: "This is default about user",
     },
-    skills: {
-      type: [String],
-    },
+    friends: [friendSchema],
   },
   {
     timestamps: true,

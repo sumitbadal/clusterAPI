@@ -20,14 +20,12 @@ authRouter.post("/signup", async (req: Request, res: Response) => {
     await user.save();
     res.send({
       status: "Success",
-      statusCode: 200,
       message: "User created successfully",
     });
   } catch (error: any) {
     console.log("Error:", error.message);
     res.status(400).send({
       status: "Error",
-      statusCode: 400,
       message: error.message,
     });
   }
@@ -56,7 +54,6 @@ authRouter.post("/login", async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(400).send({
       status: "Error",
-      statusCode: 400,
       message: error.message,
     });
   }

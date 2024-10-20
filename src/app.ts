@@ -5,8 +5,11 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import authRouter from "./routes/auth";
 import profileRouter from "./routes/profile";
+import requestRouter from "./routes/request";
+import "dotenv/config";
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
@@ -15,6 +18,7 @@ app.use(cors());
 
 app.use("/auth", authRouter);
 app.use("/profile", profileRouter);
+app.use("/request", requestRouter);
 
 // User update route
 app.patch("/userUpdate/:userId", async (req: Request, res: Response) => {
@@ -48,15 +52,15 @@ app.patch("/userUpdate/:userId", async (req: Request, res: Response) => {
 
 // Test route
 app.get("/test", (req: Request, res: Response) => {
-  res.send("Hi, this is a test auto deployment");
+  res.send("Hi, this is a test restart");
 });
 
 // Connect to the database and start the server
 connectDB()
   .then(() => {
     console.log("DB connected successfully");
-    app.listen(3000, () => {
-      console.log(`Server running on port 3000`);
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
     });
   })
   .catch((error: Error) => {

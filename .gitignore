@@ -2,3 +2,4 @@ node_modules/
 .tscache/
 lib/*.js*
 dist/
+.env
