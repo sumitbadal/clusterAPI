@@ -14,12 +14,24 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://manish774.github.io"],
+    credentials: true,
+  })
+);
 
 app.use("/auth", authRouter);
 app.use("/profile", profileRouter);
 app.use("/request", requestRouter);
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+
+  next();
+});
 // User update route
 app.patch("/userUpdate/:userId", async (req: Request, res: Response) => {
   const userId = req.params.userId;
@@ -52,7 +64,7 @@ app.patch("/userUpdate/:userId", async (req: Request, res: Response) => {
 
 // Test route
 app.get("/test", (req: Request, res: Response) => {
-  res.send("Hi, this is a test restart");
+  res.send("Hi, this is a test auto deployment... 456");
 });
 
 // Connect to the database and start the server

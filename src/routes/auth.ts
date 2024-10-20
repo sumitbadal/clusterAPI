@@ -44,6 +44,7 @@ authRouter.post("/login", async (req: Request, res: Response) => {
       const token = await user.getToken();
       res.cookie("token", token);
       res.send({
+        details: user,
         status: "Success",
         statusCode: 200,
         message: "Login Successful",
