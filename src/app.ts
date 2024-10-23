@@ -7,6 +7,7 @@ import authRouter from "./routes/auth";
 import profileRouter from "./routes/profile";
 import requestRouter from "./routes/request";
 import "dotenv/config";
+import groupRouter from "./routes/group";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,6 +26,7 @@ app.use(
 app.use("/auth", authRouter);
 app.use("/profile", profileRouter);
 app.use("/request", requestRouter);
+app.use("/group", groupRouter);
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
